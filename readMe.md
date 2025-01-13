@@ -161,7 +161,7 @@ Returns a success message indicating the task has been deleted.
 
 For a step-by-step tutorial on how the To-Do App was built, check out the video by Net Ninja:
 
-[Net Ninja - MERN Stack To-Do App Tutorial](https://www.youtube.com/)
+[Net Ninja - MERN Stack To-Do App Tutorial](https://www.youtube.com/watch?v=98BzS5Oz5E4&list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE&index=1)
 
 ## 9. License
 
