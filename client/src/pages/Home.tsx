@@ -1,25 +1,32 @@
 import { useEffect, useState } from "react";
 import TodoDetail from '../components/TodoDetail';
 import AddTask from "../components/AddTask";
+
 interface Todo {
   _id: string;
   title: string;
   task: string;  // Use 'task' here as the field name
-  completed: boolean;
   createdAt: string;
+  updatedAt: string;
 }
 
-const Home = () => {
-  const [todos, setTodo] = useState<Todo[]>([]);
+const Home: React.FC = () => { 
+  const [todos, setTodo] = useState<Todo[] | null>(null);
 
   useEffect(() => {
     const fetchTodo = async () => {
-      const response = await fetch('/api/todo');
-      const json = await response.json();
-
-      if (response.ok) {
-        setTodo(json);
+      try {
+          const response = await fetch('/api/todo');
+          const json = await response.json();
+    
+          if (response.ok) {
+            setTodo(json);
+          }
       }
+      catch(error) {
+        console.error("Failed to fetch Todo: ", error)
+      }
+    
     };
 
     fetchTodo();

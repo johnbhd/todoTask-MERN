@@ -35,7 +35,7 @@ const createTodo = async (req, res) => {
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-    res.json({mssg: 'POST a new todo'})
+
 }
 // delete a workout
 const deleteTodo = async (req, res) => {

@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { useTodoContext } from "../hooks/useTodoContext";
 
 export default function AddTask() {
   const [title, setTitle] = useState<string>("");
   const [task, setTask] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-
-  const { dispatch } = useTodoContext();
 
   interface ApiResponse {
     error?: string;
@@ -26,12 +23,10 @@ export default function AddTask() {
       return;
     }
 
-    const newTask = { title, task };
-
     try {
-      const response = await fetch("/api/task", {
+      const response = await fetch("/api/todo", {
         method: "POST",
-        body: JSON.stringify(newTask),
+        body: JSON.stringify({ title, task}),
         headers: {
           "Content-Type": "application/json",
         },
@@ -47,7 +42,6 @@ export default function AddTask() {
         setError(null);
         setTitle("");
         setTask("");
-        dispatch({ type: "CREATE_TODO", payload: json.task });
         console.log("Task added:", json.task);
       }
     } catch (error) {
@@ -56,7 +50,7 @@ export default function AddTask() {
   };
 
   return (
-    <form action="post" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="h-[30vh] w-[60vh] mt-[-0.5vh] relative right-6">
         <h3 className="font-bold text-[6vh]">Add Task</h3>
         <br />
