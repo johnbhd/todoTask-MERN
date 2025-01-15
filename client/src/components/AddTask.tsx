@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../App.css";
 
 export default function AddTask() {
   const [title, setTitle] = useState<string>("");
@@ -52,7 +53,7 @@ export default function AddTask() {
   return (
     <form onSubmit={handleSubmit}>
       <div className="h-[30vh] w-[60vh] mt-[-0.5vh] relative right-6">
-        <h3 className="font-bold text-[6vh]">Add Task</h3>
+        <h3 className="title font-bold text-[6vh]">Add Task</h3>
         <br />
         <div className="ml-6">
           {error && <div className="text-red-500">{error}</div>}

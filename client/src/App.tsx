@@ -7,12 +7,10 @@ function App() {
   return (
     <div className="min-h-screen">
       <BrowserRouter>
-        <Navbar />
-        <div className="max-w-[1400px] px-5 py-5 mx-auto">
+        <Navbar /> 
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>
-        </div>
       </BrowserRouter>
     </div>
   );
