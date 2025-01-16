@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTodoContext } from "../hooks/useTodoContext";
 import "../App.css";
 
 export default function AddTask() {
+  const { dispatch } = useTodoContext();
   const [title, setTitle] = useState<string>("");
   const [task, setTask] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +45,8 @@ export default function AddTask() {
         setError(null);
         setTitle("");
         setTask("");
-        console.log("Task added:", json.task);
+        //console.log("Task added:", json.task);
+        dispatch({type: 'CREATE_TODO', payload: json })
       }
     } catch (error) {
       setError("An error occurred, please try again!");

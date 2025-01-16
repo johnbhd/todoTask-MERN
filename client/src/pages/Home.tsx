@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useTodoContext } from "../hooks/useTodoContext";
+  
 import TodoDetail from '../components/TodoDetail';
 import AddTask from "../components/AddTask";
 
@@ -10,17 +12,18 @@ interface Todo {
   updatedAt: string;
 }
 
+
 const Home: React.FC = () => { 
-  const [todos, setTodo] = useState<Todo[] | null>(null);
+  const { todo: todos, dispatch } = useTodoContext();
 
   useEffect(() => {
     const fetchTodo = async () => {
       try {
           const response = await fetch('/api/todo');
-          const json = await response.json();
+          const json: Todo[] = await response.json();
     
           if (response.ok) {
-            setTodo(json);
+            dispatch({ type: 'SET_TODO', payload: json })
           }
       }
       catch(error) {
@@ -30,7 +33,7 @@ const Home: React.FC = () => {
     };
 
     fetchTodo();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="home min-h-screen flex py-10 mx-[10vh]">
