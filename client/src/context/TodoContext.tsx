@@ -4,14 +4,16 @@ interface Todo {
     title: string;
     task: string; 
     createdAt: string;
+    [key: string]: any;
 }
   
 interface TodoState {
     todo: Todo[] | null;
 }
 type TodoAction = 
-    | { type: "SET_TODO", payload: Todo[] }
-    | { type: "CREATE_TODO", payload: Todo };
+    | { type: "SET_TODO"; payload: Todo[] }
+    | { type: "CREATE_TODO"; payload: Todo }
+    | { type: "DELETE_TODO"; payload: { _id: string}}
 
 export const TodoContext = createContext<{
     todo: Todo[] | null;
@@ -28,6 +30,10 @@ export const todoReducer = (state: TodoState, action: TodoAction) => {
         case 'CREATE_TODO':
             return {
                 todo: [action.payload, ...(state.todo || [])],
+            };
+        case 'DELETE_TODO':
+            return {
+                todo: state.todo?.filter((w) => w._id !== action.payload._id) || null,
             };
         default: 
             return state;
