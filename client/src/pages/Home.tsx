@@ -40,7 +40,7 @@ const Home: React.FC = () => {
        <div className="mt-4">
         <AddTask/>
       </div>
-      <div className="container mt-[15vh]">
+      <div className="container mt-[1vh]">
         {todos && todos.map((todo) => (
           <TodoDetail key={todo._id} todo={todo} /> 
         ))}

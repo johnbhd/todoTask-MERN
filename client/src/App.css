@@ -12,21 +12,34 @@ body {
   font-family: "Poppins";
 }
 .todo {
-  width: 100vh;
+  width: 100%;
 }
 input {
   outline: none;
 
 }
+.tasking {
+  display: flex;
+}
 @media screen and (max-width: 600px) {
-
+  .task {
+    font-size: 3vh;
+  }
+  .todo {
+    width: 40vh;
+    position: relative;
+    left: 4vh;
+  }
+  .buts {
+    float: right;
+  }
   .home {
     display: block;
   }
   .container {
     position: relative;
     top: 130vh;
-    right: 10vh;
+    right: 1vh;
     width: 1vh;
   }
   .title {
