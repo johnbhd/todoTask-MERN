@@ -67,7 +67,7 @@ export default function AddTask() {
             type="text"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
-            className="shadow-md p-1 mt-3"
+            className="shadow-md px-3 py-1 mt-3"
           />
           <br />
           <br />
@@ -77,7 +77,7 @@ export default function AddTask() {
             type="text"
             onChange={(e) => setTask(e.target.value)}
             value={task}
-            className="shadow-md p-1 mt-3"
+            className="shadow-md px-3 py-1 mt-3"
           />
           <br />
           <br />
