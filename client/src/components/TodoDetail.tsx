@@ -41,7 +41,7 @@ interface TodoDetailProps {
 
     return (
   
-      <div className="todo h-[30vh] p-10 bg-slate-100 shadow-md mt-10 relative bottom-[5vh] leading-[5vh]">
+      <div className="todo h-[30vh] p-10 bg-slate-100 shadow-md mt-10 relative bottom-[5vh] leading-[5vh] ">
         <div className='tasking justify-between items-center'>
             <h2 className="task text-[4vh]"><strong>Task: </strong>{todo.title}</h2>
              <div className="buts flex space-x-5 text-lg"> 

@@ -55,13 +55,13 @@ export default function AddTask() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="h-[30vh] w-[60vh] mt-[-0.5vh] relative right-6">
-        <h3 className="title font-bold text-[6vh]">Add Task</h3>
+      <div className="h-[30vh] w-[60vh] mt-[-0.5vh] relative right-6 ">
+        <h3 className="title font-bold text-[6vh] dark:text-white">Add Task</h3>
         <br />
         <div className="ml-6">
           {error && <div className="text-red-500">{error}</div>}
           <br />
-          <label className="font-bold text-[3vh]">Task:</label>
+          <label className="font-bold text-[3vh] dark:text-white">Task:</label>
           <br />
           <input
             type="text"
@@ -71,7 +71,7 @@ export default function AddTask() {
           />
           <br />
           <br />
-          <label className="font-bold text-[3vh]">Description:</label>
+          <label className="font-bold text-[3vh] dark:text-white">Description:</label>
           <br />
           <input
             type="text"

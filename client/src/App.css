@@ -16,12 +16,14 @@ body {
 }
 input {
   outline: none;
-  
-
 }
 .tasking {
   display: flex;
 }
+.dark {
+  background-color: black;
+}
+
 @media screen and (max-width: 600px) {
   .task {
     font-size: 3vh;
