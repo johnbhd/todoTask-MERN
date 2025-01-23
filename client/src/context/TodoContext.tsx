@@ -13,6 +13,7 @@ interface TodoState {
 type TodoAction = 
     | { type: "SET_TODO"; payload: Todo[] }
     | { type: "CREATE_TODO"; payload: Todo }
+    | { type: "UPDATE_TODO"; payload: Todo}
     | { type: "DELETE_TODO"; payload: { _id: string}}
 
 export const TodoContext = createContext<{
@@ -30,6 +31,12 @@ export const todoReducer = (state: TodoState, action: TodoAction) => {
         case 'CREATE_TODO':
             return {
                 todo: [action.payload, ...(state.todo || [])],
+            };
+        case 'UPDATE_TODO': 
+            return {
+                todo: state.todo?.map((w) => 
+                    w._id === action.payload._id ? { ...w, ...action.payload } : w 
+                ) || null,
             };
         case 'DELETE_TODO':
             return {

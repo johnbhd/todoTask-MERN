@@ -1,11 +1,12 @@
 import { FC, useState } from 'react';
 import { useTodoContext } from '../hooks/useTodoContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import UpdateModal from './UpdateModal';
 
 const editIcon = <FontAwesomeIcon icon = {faPenToSquare} />
 const deleteIcon = <FontAwesomeIcon icon= {faTrash} />
+
 
 interface Todo {
     _id: string;
@@ -18,8 +19,9 @@ interface TodoDetailProps {
 }
   const TodoDetail: FC<TodoDetailProps> = ({ todo }) => {
     const { dispatch } = useTodoContext();
-    const [modalOpen, setmodalOpen] = useState<boolean>(false)
-    const [updateOpen, setupdateOpen] = useState<boolean>(false)
+    const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
+    const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false)
+
 
     const handleClick = async () => {
       try {
@@ -30,25 +32,23 @@ interface TodoDetailProps {
 
         if (response.ok) {
           dispatch({ type: 'DELETE_TODO', payload: json });
-          setmodalOpen(false)
+          setDeleteModalOpen(false)
         } 
       } catch (error) {
         console.error('Error deleting content:  ', error);
       }
     };
   const handleModal = () => {
-    setmodalOpen(!modalOpen);
+    setDeleteModalOpen(!deleteModalOpen);
   };
-  const updateModal = () => {
-    setupdateOpen(!updateOpen)
-  }
+
     return (
   
       <div className="todo h-[30vh] p-10 bg-slate-100 shadow-md mt-10 relative bottom-[5vh] leading-[5vh] ">
         <div className='tasking justify-between items-center'>
             <h2 className="task text-[4vh]"><strong>Task: </strong>{todo.title}</h2>
              <div className="buts flex space-x-5 text-lg"> 
-                <button onClick={updateModal} className="text-blue-700 cursor-pointer">
+                <button onClick={() => setUpdateModalOpen(true)} className="text-blue-700 cursor-pointer">
                   {editIcon}
                 </button>
                 <button onClick={handleModal} className="text-red-800 cursor-pointer">
@@ -61,28 +61,8 @@ interface TodoDetailProps {
           <p className='text-[12px] ml-7 mt-2'>{new Date(todo.createdAt).toLocaleDateString()}</p>
        
         </div>
-        {updateOpen && (
-          <div className='fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-screen bg-black bg-opacity-50'>
-            <div className="relative bg-white rounded-lg shadow dark:bg-white-700 px-[10vh] py-6 max-w-md">
-                <h3 className="mb-5 text-[4vh] text-black-500 dark:text-black-400 font-bold text-center">Update Task</h3>
-              <div className="flex flex-col gap-4 ">
-              <label className="font-bold text-[3vh] dark:text-white">Task:</label>
-                <input type="text" className='shadow-md px-2 border-[0.5px] border-black'/>
-                <label className="font-bold text-[3vh] dark:text-white">Description:</label>
-                <input type="text" className='shadow-md px-2 border-[0.5px] border-black'/>
-                <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded mt-7"
-          >
-            Add
-          </button>
-            </div>  
-            </div>
-          </div>
-
-
-        )}
-        {modalOpen && (
+      
+        {deleteModalOpen && (
           <div className='fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-screen bg-black bg-opacity-50'>
             <div className="relative bg-white rounded-lg shadow dark:bg-white-700 p-6 max-w-md">
                 <h3 className="mb-5 text-lg font-normal text-black-500 dark:text-black-400">Do you want to Delete this Task?</h3>
@@ -102,9 +82,12 @@ interface TodoDetailProps {
             </div>  
             </div>
           </div>
-
-
         )}
+        <UpdateModal 
+          isOpen = {updateModalOpen}
+          onClose= { () => setUpdateModalOpen(false)}
+          todo = {todo}
+          />
       </div>
     );
   };
