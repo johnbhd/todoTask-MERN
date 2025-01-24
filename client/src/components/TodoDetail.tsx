@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
-import { useTodoContext } from '../hooks/useTodoContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import UpdateModal from './UpdateModal';
+import DeleteModal from './DeleteModal';
 
 const editIcon = <FontAwesomeIcon icon = {faPenToSquare} />
 const deleteIcon = <FontAwesomeIcon icon= {faTrash} />
@@ -18,30 +18,11 @@ interface TodoDetailProps {
     todo: Todo;
 }
   const TodoDetail: FC<TodoDetailProps> = ({ todo }) => {
-    const { dispatch } = useTodoContext();
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false)
 
 
-    const handleClick = async () => {
-      try {
-        const response = await fetch(`/api/todo/${todo._id}`, {
-            method: 'DELETE',
-          });
-        const json = await response.json();
-
-        if (response.ok) {
-          dispatch({ type: 'DELETE_TODO', payload: json });
-          setDeleteModalOpen(false)
-        } 
-      } catch (error) {
-        console.error('Error deleting content:  ', error);
-      }
-    };
-  const handleModal = () => {
-    setDeleteModalOpen(!deleteModalOpen);
-  };
-
+  
     return (
   
       <div className="todo h-[30vh] p-10 bg-slate-100 shadow-md mt-10 relative bottom-[5vh] leading-[5vh] ">
@@ -51,7 +32,7 @@ interface TodoDetailProps {
                 <button onClick={() => setUpdateModalOpen(true)} className="text-blue-700 cursor-pointer">
                   {editIcon}
                 </button>
-                <button onClick={handleModal} className="text-red-800 cursor-pointer">
+                <button onClick={() => setDeleteModalOpen(true)} className="text-red-800 cursor-pointer">
                   {deleteIcon}
                 </button>
              </div>
@@ -61,28 +42,12 @@ interface TodoDetailProps {
           <p className='text-[12px] ml-7 mt-2'>{new Date(todo.createdAt).toLocaleDateString()}</p>
        
         </div>
-      
-        {deleteModalOpen && (
-          <div className='fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-screen bg-black bg-opacity-50'>
-            <div className="relative bg-white rounded-lg shadow dark:bg-white-700 p-6 max-w-md">
-                <h3 className="mb-5 text-lg font-normal text-black-500 dark:text-black-400">Do you want to Delete this Task?</h3>
-              <div className="flex justify-end space-x-3">
-              <button
-                onClick={handleClick}
-                className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-4 py-2"
-              >
-                Yes, delete it
-              </button>
-              <button
-                onClick={handleModal}
-                className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none rounded-lg"
-              >
-                Cancel
-              </button>
-            </div>  
-            </div>
-          </div>
-        )}
+        <DeleteModal 
+          isOpen = {deleteModalOpen}
+          onClose= { () => setDeleteModalOpen(false)}
+          todo = {todo}
+          />
+   
         <UpdateModal 
           isOpen = {updateModalOpen}
           onClose= { () => setUpdateModalOpen(false)}

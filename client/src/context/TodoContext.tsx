@@ -33,10 +33,11 @@ export const todoReducer = (state: TodoState, action: TodoAction) => {
                 todo: [action.payload, ...(state.todo || [])],
             };
         case 'UPDATE_TODO': 
+            const updatedTodos = (state.todo || []).map((todo) =>
+                todo._id === action.payload._id ? action.payload : todo
+            );
             return {
-                todo: state.todo?.map((w) => 
-                    w._id === action.payload._id ? { ...w, ...action.payload } : w 
-                ) || null,
+                todo: updatedTodos,
             };
         case 'DELETE_TODO':
             return {
