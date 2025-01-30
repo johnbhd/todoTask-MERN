@@ -1,13 +1,13 @@
 const Todo = require('../models/todoList')
 const mongoose = require('mongoose')
 
-// get all workout
+// get all todo
 const getTodos = async (req, res) => {
     const todos = await Todo.find({}).sort({createdAt: -1})
     res.status(200).json(todos)
 }
 
-// get a single workout
+// get a single todo
 const getTodo = async (req, res) => {
     const { id } = req.params
 
@@ -24,7 +24,7 @@ const getTodo = async (req, res) => {
     res.status(200).json(todo)
 }
 
-// crete a new workout
+// crete a new todo
 
 const createTodo = async (req, res) => {
     const {title, task} = req.body
@@ -37,7 +37,7 @@ const createTodo = async (req, res) => {
     }
 
 }
-// delete a workout
+// delete a todo
 const deleteTodo = async (req, res) => {
     const { id } = req.params
     if(!mongoose.Types.ObjectId.isValid(id)) {
@@ -50,7 +50,7 @@ const deleteTodo = async (req, res) => {
 
     res.status(200).json(todo)
 }
-// update a workout
+// update a todo
 const updateTodo = async (req, res) => {
     const { id } = req.params
     if(!mongoose.Types.ObjectId.isValid(id)) {

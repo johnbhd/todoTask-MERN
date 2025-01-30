@@ -34,11 +34,11 @@ const UpdateModal: FC<UpdateModalProps> = ( {isOpen, onClose, todo}) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
       e.preventDefault();
+
       if (!title || task === "") {
         setError("All fields are required");
         return;
       }
-      console.log("Submitting update..."); 
         try {
           const response = await fetch(`/api/todo/${todo._id}`, {
                 method: "PATCH",
@@ -59,7 +59,7 @@ const UpdateModal: FC<UpdateModalProps> = ( {isOpen, onClose, todo}) => {
                 setError(null)
                 setTitle("");
                 setTask("");
-                dispatch({ type: 'UPDATE_TODO', payload: json });
+                dispatch({ type: 'UPDATE_TODO', payload: json.task });
                 onClose();
             }
         } catch(error) {
@@ -78,8 +78,6 @@ const UpdateModal: FC<UpdateModalProps> = ( {isOpen, onClose, todo}) => {
               >
                 {xMark}
               </button>
-         
-     
                 </div>     {error && <div className="text-red-500">{error}</div>}
               <div className="flex flex-col gap-4 ">
               <label className="font-bold text-[3vh] dark:text-white">Task:</label>
